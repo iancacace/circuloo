@@ -1,0 +1,107 @@
+body {
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+}
+.tablero {
+	position: absolute;
+	left: 44%;
+	height: 11%;
+	width: 10%;
+	top: 40px;
+	z-index: 10;
+}
+.tablero1 {
+	position: relative;
+	margin-left: 32%;
+	height: 50%;
+	width: 35%;
+}
+.tablero2 {
+	position: relative;
+	display: flex;
+	height: 50%;
+	width: 100%;
+	
+}
+.arriba {
+	width: 100%;
+	height: 100%;
+}
+.t2{
+	flex-basis: 100%;
+	height: 100%;
+}
+.container {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #055;
+}
+.circulo {
+	position: absolute;
+	height: 18vh;
+	width: 10vw;
+	left: 44%;
+	top: 40%;
+	background-color: red;
+	border: none;
+	border-radius: 50%;
+	z-index: 0;
+}
+.material-icons {
+	font-size: 3vh !important;
+	background-size: cover !important;
+}
+.colores {
+	position: absolute;
+	display: flex;
+	height: 7vh;
+	width: 10vw;
+	bottom: 0;
+	margin-left: 44.5%;
+	z-index: 10;
+}
+
+.color {
+	flex-basis: 100%;
+	height: 100%;
+	border-radius: 50%;
+	border: 1px solid #fff;
+	margin-left: 5px;
+}
+
+.rojo {
+	background-color: red;
+}
+.verde {
+	background-color: green;
+}
+.azul {
+	background-color: blue;
+}
+.aleatorio {
+	height: 5vh;
+	width: 4vw;
+	position: relative;
+	top: 28%;
+	left: 47%;
+	opacity: 0.2;
+	border-radius: 25%;
+}
+button {
+	cursor: pointer;
+	outline:none;
+	transition-delay: 5ms;
+}
+button:active {
+	box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+button:hover {
+	opacity: 0.8;
+}
+}
+
