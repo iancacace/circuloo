@@ -10,11 +10,8 @@ const verde = document.querySelector('.verde')
 const azul = document.querySelector('.azul')
 const aleatorio = document.querySelector('.aleatorio')
 const container = document.querySelector('.container')
-
-
-
-
-	
+const mas = document.querySelector('.mas')
+const menos = document.querySelector('.menos')
 
 
 //movimiento//
@@ -22,19 +19,19 @@ const container = document.querySelector('.container')
 	//flechas
 	arriba.onclick = function(){
 		up()
-	reaparecer()
+		reaparecer()
 }
 	abajo.onclick = function(){
 		down()
-	reaparecer()
+		reaparecer()
 }
 	izquierda.onclick = function(){
 		left()
-	reaparecer()
+		reaparecer()
 }
 	derecha.onclick = function(){
 		right()
-	reaparecer()
+		reaparecer()
 }
 	function up(){
 			let valor = circulo.offsetTop
@@ -67,12 +64,56 @@ const container = document.querySelector('.container')
 					 	right()						 		
 				 		}
 	}
+
+	   	  
+ // velocidad de movimiento
+
+	const datos = circulo.getBoundingClientRect()
+	const alto = datos.height
+	const ancho = datos.width
+	const alto2 = alto / 2
+	const ancho2 = ancho / 2
+	let	velocidad = {
+			x: 4,
+			y: -4
+		}
+
+	 function rapido(){
+		velocidad.y = velocidad.y*2
+		velocidad.x = velocidad.x*2
+		}
+	 function lento(){
+		velocidad.y = velocidad.y/2
+		velocidad.x = velocidad.x/2
+		}
+	let	conteo = 0	
+	mas.onclick = function(){
+	if (conteo <= 4) {    	
+	    rapido()
+	     menos.style.visibility = "visible"
+	     conteo++  
+		}	else {
+				rapido()
+				conteo++
+		     	mas.style.visibility = "hidden"  
+	  		  }
+	}
+	menos.onclick = function(){
+		if (conteo >= -2) {    	
+	      	lento()
+	      	mas.style.visibility = "visible"
+	        conteo--  
+			}	else {
+					lento()
+					conteo--
+		    	 	menos.style.visibility = "hidden"	        
+					 }
+	}
+
+//movimiento aleatorio		
+
 	function reaparecer(){
 		let datos = circulo.getBoundingClientRect()
-		let alto = datos.height
-		let ancho = datos.width
-		const alto2 = alto / 2
-		const ancho2 = ancho / 2
 		let posicionX = datos.x
 		let posicionY = datos.y
 
@@ -89,44 +130,54 @@ const container = document.querySelector('.container')
 					circulo.style.top = container.clientHeight + 'px'
 			}
 		}
-
-	//movimiento aleatorio		
-
-window.setInterval(function(){
-	const datos = circulo.getBoundingClientRect()
-	const alto = datos.height
-	const ancho = datos.width
-	let posicionX = datos.x
-	let posicionY = datos.y
-	const	velocidad = {
-			x: 4,
-			y: -4
+	var requestId;
+	function start() {
+    if (!requestId) {
+       requestId = window.requestAnimationFrame(bordes);
+    }
 	}
-aleatorio.onclick = function(){
-	colorDeBoton()
-	bordes()
-}
-	 function bordes(){
-	    medida()
-			random()
-		  rebote()
-			requestAnimationFrame(bordes)
+	function stop() {
+    if (requestId) {
+       window.cancelAnimationFrame(requestId);
+       requestId = undefined;
+    }
+	}
+	let cuenta = 1
+	aleatorio.onclick = function(){
+		colorDeBoton()
+		     if (cuenta == 0) {    	
+	      	stop()
+	         cuenta = 1        
+				}	else {
+		     	bordes()
+		        cuenta = 0    
 	    }
-		function random() {
-			posicionX += velocidad.x
-			posicionY += velocidad.y
-			}
-		function medida(){ 
-			circulo.style.left = posicionX + 'px'
-			circulo.style.top = posicionY + 'px'
-		}
-		function rebote() {
-			if (posicionX + ancho >= window.innerWidth) {
+  }
+	 function bordes(){
+		 	requestId = undefined;
+		 	start()
+		  medida()
+			rebote()
+		  }
+	function medida(){ 
+		let datos = circulo.getBoundingClientRect()
+		let posicionX = datos.x
+		let posicionY = datos.y
+		posicionX += velocidad.x
+		posicionY += velocidad.y
+		circulo.style.left = posicionX + 'px'
+		circulo.style.top =  posicionY + 'px'
+	}
+	function rebote() {
+		let datos = circulo.getBoundingClientRect()
+		let posicionX = datos.x
+		let posicionY = datos.y
+		if (posicionX + ancho >= window.innerWidth) {
 				velocidad.x = - velocidad.x
-				setColor()
-			} else if (posicionX <= 0) {
-					velocidad.x = -	velocidad.x 
-					setColor()	
+			setColor()
+		} else if (posicionX <= 0) {
+				velocidad.x = -	velocidad.x 
+				setColor()	
 	//en el if anterior cambie el valor de la variable a negativo(sentido de movimiento), y ahora se niega el negativo dejandola como al principio (positivo)
 			}
 			if (posicionY + alto >= window.innerHeight) {
@@ -137,27 +188,21 @@ aleatorio.onclick = function(){
 					setColor()
 					}
 		}
-},1000)
-	
 
 
 //colores//
+
 	//tablero
 		rojo.onclick = function(){
-				circulo.classList.remove('verde')
-				circulo.classList.remove('azul')
-				circulo.classList.add('rojo')
+			circulo.style.backgroundColor = "red"
 		} 
 		verde.onclick =  function(){
-			circulo.classList.remove('rojo')
-			circulo.classList.remove('azul')
-			circulo.classList.add('verde')
+			circulo.style.backgroundColor = "green"
 		} 
 		azul.onclick = function(){
-			circulo.classList.remove('rojo')
-			circulo.classList.remove('verde')
-			circulo.classList.add('azul')
+			circulo.style.backgroundColor = "blue"
 		} 
+		
 	//color aleatorio	
 		function cambiarColor(){
 		  var letras = '0123456789ABCDEF'
@@ -180,6 +225,7 @@ aleatorio.onclick = function(){
 		        count = 0
 	        		}
 	   	    }
+
 })
 
 
@@ -189,7 +235,32 @@ aleatorio.onclick = function(){
 
 
 
+
+
+
+
+
+
+
+
+
 /*
+
+				 tiempo = undefined
+				let contador = 1
+				aleatorio.onclick = function(){
+					     if (contador == 0) {	     
+					     	window.clearInterval(tiempo)
+					         contador = 1        
+								}	else {
+								tiempo =  window.setInterval(intervalo, 1000)
+						        contador = 0    
+					    }
+					}
+				
+				intervalo()
+
+				function intervalo(){
 
 
 // mi intento de parar el modo aleatorio cuando clickeas de nuevo en el boton.
@@ -216,6 +287,25 @@ aleatorio.onclick = function(){
 		        cuenta = 0	    
 	    }
 	  }
+
+
+
+................. como acceder a datos de una funcion y como devolver mas de 1 dato con return.
+
+	function random() {
+		let datos = circulo.getBoundingClientRect()
+		let posicionX = datos.x
+		let posicionY = datos.y
+		posicionX += velocidad.x
+		posicionY += velocidad.y
+
+		return {
+			posicionX: posicionX,
+			posicionY: posicionY
+		}
+		}
+const ian = random();
+blabla = ian.posicionX 
 
 
 	function recorrerY(){ 

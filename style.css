@@ -86,11 +86,64 @@ body {
 	height: 5vh;
 	width: 4vw;
 	position: relative;
-	top: 28%;
-	left: 47%;
+	top: 27.5%;
+	left: 43.5%;
 	opacity: 0.2;
 	border-radius: 25%;
 }
+.mas {
+	height: 4vh;
+	width: 3vw;
+	position: relative;
+	top: 28%;
+	left: 43.5%;
+	opacity: 0.2;
+	border-radius: 25%;
+}
+.menos{
+	height: 4vh;
+	width: 3vw;
+	position: relative;
+	top: 28%;
+	left: 43.5%;
+	opacity: 0.2;
+	border-radius: 25%;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #ebe;
+  color: #000;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+   opacity: 0;
+  transition: opacity 1s;
+}
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ebe transparent transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+   opacity: 1;
+}
+
 button {
 	cursor: pointer;
 	outline:none;
@@ -103,5 +156,3 @@ button:active {
 button:hover {
 	opacity: 0.8;
 }
-}
-
