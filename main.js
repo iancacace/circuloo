@@ -13,7 +13,7 @@ const aleatorio = document.querySelector('.aleatorio')
 const container = document.querySelector('.container')
 const mas = document.querySelector('.mas')
 const menos = document.querySelector('.menos')
-
+let colores;
 
 //movimiento//
 
@@ -21,55 +21,55 @@ const menos = document.querySelector('.menos')
 	arriba.onclick = function(){
 		up()
 		reaparecer()
-}
+	}
 	abajo.onclick = function(){
-		down()
-		reaparecer()
-}
+	down()
+	reaparecer()
+	}
 	izquierda.onclick = function(){
-		left()
-		reaparecer()
-}
+	left()
+	reaparecer()
+	}
 	derecha.onclick = function(){
 		right()
 		reaparecer()
-}
+	}
 	function up(){
-		if (!requestId){	
+		if(!requestId){	
 			let valor = circulo.offsetTop
 			circulo.style.top = valor - 100 + 'px'
 		}else{
 			alert('no puede mover el circulo mientras el "modo aleatorio" este activo')
 		}
 	}
-		function down(){
-			if (!requestId){	
+	function down(){
+		if (!requestId){	
 			let valor = circulo.offsetTop
 			circulo.style.top = valor + 100 + 'px'
-			}else{
+		}else{
 			alert('no puede mover el circulo mientras el "modo aleatorio" este activo')
 			}
-		}
-		function left(){
-			if (!requestId){	
+	}
+	function left(){
+		if(!requestId){	
 			let valor = circulo.offsetLeft
 			circulo.style.left = valor - 100 + 'px'
-			}else{
+		}else{
 			alert('no puede mover el circulo mientras el "modo aleatorio" este activo')
-			}
 		}
-		function right(){
-			if (!requestId){	
+	}
+	function right(){
+		if (!requestId){	
 			let valor = circulo.offsetLeft
 			circulo.style.left = valor + 100 + 'px'
-			}else{
+		}else{
 			alert('no puede mover el circulo mientras el "modo aleatorio" este activo')
 			}
-		}
+	}
 
 	//teclas
 	document.onkeydown = function(){teclas(event)}
-console.log(event)
+	console.log(event)
 	function teclas(event){
 		reaparecer()
 				if (event.key === 'ArrowUp') {
@@ -95,37 +95,36 @@ console.log(event)
 			y: -4
 		}
 
-	 function rapido(){
+	function rapido(){
 		velocidad.y = velocidad.y*2
 		velocidad.x = velocidad.x*2
-		}
-	 function lento(){
+	}
+	function lento(){
 		velocidad.y = velocidad.y/2
 		velocidad.x = velocidad.x/2
-		}
+	}
 	let	conteo = 0	
 	mas.onclick = function(){
-		if (conteo <= 3) {    	
-		    rapido()
-		     menos.style.visibility = "visible"
-		     conteo++  
-			}	else {
-					rapido()
-					conteo++
-			     	mas.style.visibility = "hidden"  
-		  		  }
+		if(conteo <= 3){    	
+		   rapido()
+		   menos.style.visibility = "visible"
+		   conteo++  
+		}else{
+			rapido()
+			conteo++
+			mas.style.visibility = "hidden"  
 		}
+	}
 	menos.onclick = function(){
-	
-		if (conteo >= -2) {    	
-	      	lento()
-	      	mas.style.visibility = "visible"
-	        	conteo--  
-			}	else {
-					lento()
-					conteo--
-		    	 	menos.style.visibility = "hidden"	        
-					 }
+		if(conteo >= -2){    	
+	      lento()
+	      mas.style.visibility = "visible"
+	      conteo--  
+		}else{
+			lento()
+			conteo--
+		   menos.style.visibility = "hidden"	        
+		}
 	}
 
 //movimiento aleatorio		
@@ -134,19 +133,19 @@ console.log(event)
 		let datos = circulo.getBoundingClientRect()
 		let posicionX = datos.x
 		let posicionY = datos.y
-			if (posicionX + ancho2 >= window.innerWidth) {
-					circulo.style.left = -150 + 'px'
-			}
-			else if (posicionY + alto2 >= window.innerHeight) {
-					circulo.style.top = -150 + 'px'
-			}
-			if (posicionX + ancho2 < 0) {
-					circulo.style.left = container.clientWidth + 'px'
-			}
-			else if (posicionY + alto2 < 0) {
-					circulo.style.top = container.clientHeight + 'px'
-			}
+		if(posicionX + ancho2 >= window.innerWidth) {
+			circulo.style.left = -150 + 'px'
 		}
+		else if(posicionY + alto2 >= window.innerHeight) {
+				circulo.style.top = -150 + 'px'
+		}
+		if(posicionX + ancho2 < 0) {
+				circulo.style.left = container.clientWidth + 'px'
+		}
+		else if(posicionY + alto2 < 0) {
+				circulo.style.top = container.clientHeight + 'px'
+		}
+	}
 	var requestId;
 	function start() {
 		let datos = circulo.getBoundingClientRect()
@@ -155,43 +154,43 @@ console.log(event)
 		if(posicionX + ancho > window.innerWidth){			
 			circulo.style.left = (container.clientWidth - ancho) + 'px'
 		}
-		 if (posicionX < 0){
-			circulo.style.left = 0
+		if(posicionX < 0){
+		circulo.style.left = 0
 		}
 		if(posicionY + alto > window.innerHeight){			
-			circulo.style.top = (container.clientHeight - alto) + 'px'
+		circulo.style.top = (container.clientHeight - alto) + 'px'
 		}
-		 if (posicionY < 0){
-			circulo.style.top = 0
+		 if(posicionY < 0){
+		circulo.style.top = 0
 		}
-    if (!requestId) {
-	    requestId = window.requestAnimationFrame(bordes);
-    }
+   	if(!requestId) {
+	   requestId = window.requestAnimationFrame(bordes);
+    	}
 	}
 	function stop() {
-    if (requestId) {
+   	if(requestId) {
     	//console.log(requestId + ' stop')
-       window.cancelAnimationFrame(requestId);
-       requestId = undefined;
-    }
+   	window.cancelAnimationFrame(requestId);
+   	requestId = undefined;
+   	}
 	}
 	let cuenta = 0
 	aleatorio.onclick = function(){
 		colorDeBoton()
-		     if (cuenta == 1) {    	
-	      	stop()
-	         cuenta = 0        
-				}	else {
-		     	bordes()
-		        cuenta = 1    
+		if(cuenta == 1) {    	
+	      stop()
+	      cuenta = 0        
+			}else{
+		   bordes()
+		   cuenta = 1    
 	    }
   }
-	 function bordes(){
-		 	requestId = undefined;
-		 	start()
-		  	medida()
-			rebote()
-		  }
+	function bordes(){
+		requestId = undefined;
+		start()
+		medida()
+		rebote()
+	}
 	function medida(){ 
 		let datos = circulo.getBoundingClientRect()
 		let posicionX = datos.x
@@ -205,22 +204,28 @@ console.log(event)
 		let datos = circulo.getBoundingClientRect()
 		let posicionX = datos.x
 		let posicionY = datos.y
-		if (posicionX + ancho >= window.innerWidth) {
-				velocidad.x = - velocidad.x
+		if(posicionX + ancho >= window.innerWidth) {
 			setColor()
-		} else if (posicionX <= 0) {
-				velocidad.x = -	velocidad.x 
-				setColor()	
-	//en el if anterior cambie el valor de la variable a negativo(sentido de movimiento), y ahora se niega el negativo dejandola como al principio (positivo)
-			}
-			if (posicionY + alto >= window.innerHeight) {
-					velocidad.y = - velocidad.y
-					setColor()
-				} else if (posicionY <= 0) {
-					velocidad.y = - velocidad.y
-					setColor()
-					}
+			velocidad.x = -velocidad.x
+			cambiarColor()
 		}
+		if(posicionX <= 0) {
+			setColor()
+			velocidad.x = -velocidad.x
+			cambiarColor() 
+	//en el if anterior cambie el valor de la variable a negativo(sentido de movimiento), y ahora se niega el negativo dejandola como al principio (positivo)
+		}
+		if(posicionY + alto >= window.innerHeight) {
+			setColor()
+			velocidad.y = -velocidad.y
+			cambiarColor()
+			} 
+		if(posicionY <= 0) {
+			setColor()
+			velocidad.y = -velocidad.y
+			cambiarColor()
+			}		
+	}
 
 
 //colores//
@@ -242,23 +247,23 @@ console.log(event)
 		  var color = '#'
 		  for (var i = 0; i < 6; i++) {
 		    color += letras[Math.floor(Math.random() * 16)]
+		    colores = color
 		  }
-		  return color;
+		  console.log(colores)
+		  return colores;
 		}
-		function setColor(){
-			circulo.style.backgroundColor = cambiarColor()
-		}
-			let count = 0
+		cambiarColor()
+		function setColor(){circulo.style.backgroundColor = colores}
+		let count = 0
 	   function colorDeBoton() {
-	     if (count == 1) {
+	     if(count == 1) {
 	         aleatorio.style = 'background-color: red; opacity: 0.7;'
 	         count = 0        
-				}	else {
-		      	aleatorio.style = 'background-color: #4cae4c; opacity: 0.7;'
-		        count = 1
-	        		}
-	   	    }
-
+				}else{
+		      aleatorio.style = 'background-color: #4cae4c; opacity: 0.7;'
+		      count = 1
+	        	}
+	   	}
 })
 
 
