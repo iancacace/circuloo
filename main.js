@@ -1,3 +1,4 @@
+'use strict';
 document.addEventListener ('DOMContentLoaded', function () {
 
 const arriba = document.querySelector('.arriba')
@@ -34,24 +35,41 @@ const menos = document.querySelector('.menos')
 		reaparecer()
 }
 	function up(){
+		if (!requestId){	
 			let valor = circulo.offsetTop
 			circulo.style.top = valor - 100 + 'px'
+		}else{
+			alert('no puede mover el circulo mientras el "modo aleatorio" este activo')
 		}
+	}
 		function down(){
+			if (!requestId){	
 			let valor = circulo.offsetTop
 			circulo.style.top = valor + 100 + 'px'
+			}else{
+			alert('no puede mover el circulo mientras el "modo aleatorio" este activo')
+			}
 		}
 		function left(){
+			if (!requestId){	
 			let valor = circulo.offsetLeft
 			circulo.style.left = valor - 100 + 'px'
+			}else{
+			alert('no puede mover el circulo mientras el "modo aleatorio" este activo')
+			}
 		}
 		function right(){
+			if (!requestId){	
 			let valor = circulo.offsetLeft
 			circulo.style.left = valor + 100 + 'px'
+			}else{
+			alert('no puede mover el circulo mientras el "modo aleatorio" este activo')
+			}
 		}
 
 	//teclas
 	document.onkeydown = function(){teclas(event)}
+console.log(event)
 	function teclas(event){
 		reaparecer()
 				if (event.key === 'ArrowUp') {
@@ -64,7 +82,6 @@ const menos = document.querySelector('.menos')
 					 	right()						 		
 				 		}
 	}
-
 	   	  
  // velocidad de movimiento
 
@@ -88,21 +105,22 @@ const menos = document.querySelector('.menos')
 		}
 	let	conteo = 0	
 	mas.onclick = function(){
-	if (conteo <= 4) {    	
-	    rapido()
-	     menos.style.visibility = "visible"
-	     conteo++  
-		}	else {
-				rapido()
-				conteo++
-		     	mas.style.visibility = "hidden"  
-	  		  }
-	}
+		if (conteo <= 3) {    	
+		    rapido()
+		     menos.style.visibility = "visible"
+		     conteo++  
+			}	else {
+					rapido()
+					conteo++
+			     	mas.style.visibility = "hidden"  
+		  		  }
+		}
 	menos.onclick = function(){
+	
 		if (conteo >= -2) {    	
 	      	lento()
 	      	mas.style.visibility = "visible"
-	        conteo--  
+	        	conteo--  
 			}	else {
 					lento()
 					conteo--
@@ -116,7 +134,6 @@ const menos = document.querySelector('.menos')
 		let datos = circulo.getBoundingClientRect()
 		let posicionX = datos.x
 		let posicionY = datos.y
-
 			if (posicionX + ancho2 >= window.innerWidth) {
 					circulo.style.left = -150 + 'px'
 			}
@@ -132,31 +149,47 @@ const menos = document.querySelector('.menos')
 		}
 	var requestId;
 	function start() {
+		let datos = circulo.getBoundingClientRect()
+		let posicionX = datos.x
+		let posicionY = datos.y
+		if(posicionX + ancho > window.innerWidth){			
+			circulo.style.left = (container.clientWidth - ancho) + 'px'
+		}
+		 if (posicionX < 0){
+			circulo.style.left = 0
+		}
+		if(posicionY + alto > window.innerHeight){			
+			circulo.style.top = (container.clientHeight - alto) + 'px'
+		}
+		 if (posicionY < 0){
+			circulo.style.top = 0
+		}
     if (!requestId) {
-       requestId = window.requestAnimationFrame(bordes);
+	    requestId = window.requestAnimationFrame(bordes);
     }
 	}
 	function stop() {
     if (requestId) {
+    	//console.log(requestId + ' stop')
        window.cancelAnimationFrame(requestId);
        requestId = undefined;
     }
 	}
-	let cuenta = 1
+	let cuenta = 0
 	aleatorio.onclick = function(){
 		colorDeBoton()
-		     if (cuenta == 0) {    	
+		     if (cuenta == 1) {    	
 	      	stop()
-	         cuenta = 1        
+	         cuenta = 0        
 				}	else {
 		     	bordes()
-		        cuenta = 0    
+		        cuenta = 1    
 	    }
   }
 	 function bordes(){
 		 	requestId = undefined;
 		 	start()
-		  medida()
+		  	medida()
 			rebote()
 		  }
 	function medida(){ 
@@ -215,14 +248,14 @@ const menos = document.querySelector('.menos')
 		function setColor(){
 			circulo.style.backgroundColor = cambiarColor()
 		}
-			let count = 1
+			let count = 0
 	   function colorDeBoton() {
-	     if (count == 0) {
+	     if (count == 1) {
 	         aleatorio.style = 'background-color: red; opacity: 0.7;'
-	         count = 1        
+	         count = 0        
 				}	else {
 		      	aleatorio.style = 'background-color: #4cae4c; opacity: 0.7;'
-		        count = 0
+		        count = 1
 	        		}
 	   	    }
 
